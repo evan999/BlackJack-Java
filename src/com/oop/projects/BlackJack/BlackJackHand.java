@@ -1,5 +1,6 @@
 package com.oop.projects.BlackJack;
 
+import com.oop.projects.BlackJack.Actors.Actor;
 import com.oop.projects.CardGames.Card;
 
 import java.util.ArrayList;
@@ -9,6 +10,21 @@ public class BlackJackHand {
     List<Card> cards = new ArrayList<>();
     private int score;
     private boolean hasAce;
+    private Actor actor;
+
+    public BlackJackHand(Actor actor) {
+        this.actor = actor;
+    }
+    // TODO: ? Add constructor that takes one card for a split
+
+    public Actor getActor() {
+        return actor;
+    }
+
+    public String getName() {
+        return actor.getName();
+    }
+
 
     public int getCount(){
         return cards.size();

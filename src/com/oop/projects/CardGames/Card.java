@@ -3,6 +3,7 @@ package com.oop.projects.CardGames;
 public class Card {
     private int value;
     private String suit;
+    private boolean faceDown = true;
 
     public Card(int value, String suit){
         this.value = value;
@@ -35,5 +36,13 @@ public class Card {
 
     public int getValue() {
         return value;
+    }
+
+    public void flip() {
+        faceDown = !faceDown;
+    }
+
+    public boolean isFaceDown () {
+        return faceDown;
     }
 }
