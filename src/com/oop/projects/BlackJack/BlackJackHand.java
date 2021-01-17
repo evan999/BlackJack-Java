@@ -60,11 +60,11 @@ public class BlackJackHand {
         return value == 1;
     }
 
-    private boolean isSafe () {
+    private boolean isSafe() {
         return score + 11 <= 21;
     }
 
-    private boolean isFace (int value) {
+    private boolean isFace(int value) {
         return value > 10;
     }
 }
