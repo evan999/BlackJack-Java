@@ -1,6 +1,8 @@
 package com.oop.projects.BlackJack;
 
 import com.oop.projects.BlackJack.Actors.Actor;
+import com.oop.projects.BlackJack.Actors.Dealer;
+import com.oop.projects.BlackJack.Actors.Player;
 import com.oop.projects.CardGames.Card;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ public class BlackJackHand {
     private int score;
     private boolean hasAce;
     private Actor actor;
+    private int bet;
 
     public BlackJackHand(Actor actor) {
         this.actor = actor;
@@ -26,7 +29,7 @@ public class BlackJackHand {
     }
 
 
-    public int getCount(){
+    public int size(){
         return cards.size();
     }
 
@@ -37,6 +40,14 @@ public class BlackJackHand {
     public Card removeCard(int index){
         return cards.remove(index);
     }
+
+//    public int getAction() {
+//        if (actor instanceof Dealer) {
+//            return actor.getAction(score, "", 0, 0);
+//        }
+//        Player player = (Player) actor;
+//        int maxChoice = 2;
+//    }
 
     @Override
     public String toString() {
@@ -55,8 +66,34 @@ public class BlackJackHand {
         else if (isFace(card)) {
             card = 10;
         }
-
         return card;
+    }
+
+    public void setBet() {
+        bet = actor.setBet();
+    }
+
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
+
+    public int getBet(){
+        return bet;
+    }
+
+    public void doubleBet() {
+        bet *= 2;
+    }
+
+    public void revealHand() {
+        for (var card : cards) {
+            if (card.isFaceDown()) card.flip();
+        }
+    }
+
+    public boolean isPair() {
+        if (cards.size() > 2) return false;
+        return determineValue(cards.get(0).getValue()) == determineValue(cards.get(1).getValue());
     }
 
     public int getScore() {
