@@ -41,13 +41,27 @@ public class BlackJackHand {
         return cards.remove(index);
     }
 
-//    public int getAction() {
-//        if (actor instanceof Dealer) {
-//            return actor.getAction(score, "", 0, 0);
-//        }
-//        Player player = (Player) actor;
-//        int maxChoice = 2;
-//    }
+    public int getAction() {
+        if (actor instanceof Dealer) {
+            return actor.getAction(score, "", 0, 0);
+        }
+        Player player = (Player) actor;
+        int maxChoice = 2;
+        String query = "What would you like to do 1=Hit, 2=Stand";
+        if (cards.size() ==  2 && bet * 2 <= player.getWallet()) {
+            // 3 or 4 depending on pair
+            query += ", 3=Double";
+            maxChoice = 3;
+            if (isPair()) {
+                query += ", 4=Split";
+                maxChoice = 4;
+            }
+        }
+        query = query.trim() + "?";
+
+        return actor.getAction(score, query, 1, maxChoice);
+    }
+
 
     @Override
     public String toString() {

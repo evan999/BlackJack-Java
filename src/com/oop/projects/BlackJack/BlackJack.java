@@ -48,23 +48,16 @@ public class BlackJack {
     }
 
     private int getAction(BlackJackHand hand) {
-        return hand.getActor().getAction(hand.getScore(), hand.isPair(), hand.size());
+        return hand.getAction();
     }
 
-    final int HIT = 1, STAND = 2, DOUBLE = 3;
+    final int HIT = 1, STAND = 2, DOUBLE = 3, SPLIT = 4;
 
     private boolean performAction(BlackJackHand hand, int action){
         switch(action) {
             case DOUBLE:
                 System.out.println("Double");
-                int bet = hand.getBet();
-                if (bet * 2 <= ((Player) hand.getActor()).getWallet()) {
-                    hand.doubleBet();
-                }
-                else {
-                    System.out.println("ERROR: Not enough money. Hit instead");
-                    action = HIT;
-                }
+                hand.doubleBet();
             case HIT:
                 Card card = table.getDeck().draw(true);
                 System.out.println(hand.getName() +" Hit and was dealt " + card);
@@ -77,8 +70,12 @@ public class BlackJack {
             case STAND:
                 System.out.println(hand.getName() + " Stood.");
                 return true;
+            case SPLIT:
+                Card splitCard = hand.removeCard(1);
+                BlackJackHand newHand = new BlackJackHand(hand.getActor());
+                newHand.addCard(splitCard);
             default:
-                System.out.println("error! default case Stand");
+                System.out.println("ERROR! default case Stand");
                 return true;
         }
     }

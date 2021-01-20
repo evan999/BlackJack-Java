@@ -8,6 +8,7 @@ import com.oop.projects.CardGames.Standard;
 public class Table {
     private BlackJackHand dealer = new BlackJackHand(new Dealer());
     private BlackJackHand player = new BlackJackHand(new Player());
+    // List of players hands.
     private Deck deck = new Standard();
 
     public Deck getDeck() {
