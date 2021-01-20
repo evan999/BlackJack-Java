@@ -52,10 +52,13 @@ public class Player implements Actor {
         return bet > wallet && bet > 0;
     }
 
-    public int getAction(int score) {
+    @Override
+    public int getAction(int score, boolean isPair, int cardCount) {
         int choice;
         do {
-            choice = console.requestInt("What would you like to do? ");
+            choice = console.requestInt(cardCount == 2 ? "What would you like to do 1=Hit, 2=Stand, 3=Double?" :
+                    "What would you like to do 1=Hit, 2=Stand?"
+            );
         } while (choice < 1 || choice > 3);
         return choice;
     }

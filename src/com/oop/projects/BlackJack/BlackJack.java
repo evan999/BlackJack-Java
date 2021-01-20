@@ -12,8 +12,10 @@ public class BlackJack {
         setBet(table.getPlayer());
         displayTable();
         table.getPlayer().revealHand();
-
+        do {} while (!actorTurn(table.getPlayer()));
+        do {} while (!actorTurn(table.getDealer()));
         endRound(table.getPlayer());
+        System.out.println(((Player)table.getPlayer().getActor()).getWallet());
 
     }
 
@@ -21,11 +23,11 @@ public class BlackJack {
         char result = didWin(player);
         switch(result) {
             case 'n':
-                System.out.println(player.getName() + " loses" + player.getBet());
+                System.out.println(player.getName() + " loses " + player.getBet());
                 ((Player) player.getActor()).adjustWallet(player.getBet() * -1);
                 break;
             case 'y':
-                System.out.println(player.getName() + " wins" + player.getBet());
+                System.out.println(player.getName() + " wins " + player.getBet());
                 ((Player) player.getActor()).adjustWallet(player.getBet());
                 break;
             case 'p':
@@ -42,13 +44,14 @@ public class BlackJack {
 
     private boolean actorTurn(BlackJackHand hand) {
         displayHand(hand);
+        return performAction(hand, getAction(hand));
     }
 
     private int getAction(BlackJackHand hand) {
-        return hand.getAction();
+        return hand.getActor().getAction(hand.getScore(), hand.isPair(), hand.size());
     }
 
-    final int HIT = 1, STAND = 2, DOUBLE = 3, SPLIT = 4;
+    final int HIT = 1, STAND = 2, DOUBLE = 3;
 
     private boolean performAction(BlackJackHand hand, int action){
         switch(action) {
