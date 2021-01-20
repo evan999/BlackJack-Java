@@ -53,7 +53,7 @@ public class BlackJackHand {
     public String toString() {
         String output = "";
         for (var card : cards){
-            output += card + " ";
+            output += card.isFaceDown() ? "<*> " : card + " ";
         }
         return output.trim();
     }

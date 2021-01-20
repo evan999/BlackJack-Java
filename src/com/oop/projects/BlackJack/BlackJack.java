@@ -57,7 +57,14 @@ public class BlackJack {
         switch(action) {
             case DOUBLE:
                 System.out.println("Double");
-                hand.doubleBet();
+                int bet = hand.getBet();
+                if (bet * 2 <= ((Player) hand.getActor()).getWallet()) {
+                    hand.doubleBet();
+                }
+                else {
+                    System.out.println("ERROR: Not enough money. Hit instead");
+                    action = HIT;
+                }
             case HIT:
                 Card card = table.getDeck().draw(true);
                 System.out.println(hand.getName() +" Hit and was dealt " + card);

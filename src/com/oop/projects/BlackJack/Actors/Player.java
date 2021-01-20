@@ -52,6 +52,7 @@ public class Player implements Actor {
         return bet > wallet && bet > 0;
     }
 
+
     @Override
     public int getAction(int score, boolean isPair, int cardCount) {
         int choice;

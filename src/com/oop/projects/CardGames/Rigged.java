@@ -17,7 +17,7 @@ public class Rigged implements Deck {
         int value = scanner.nextInt();
         System.out.println("Card suit: 1 - 4");
         String suit = scanner.next();
-        Card card = new Card(value, SUITS[Integer.parseInt(suit)]);
+        Card card = new Card(value, SUITS[Integer.parseInt(suit) - 1]);
         card.flip();
         return card;
     }
