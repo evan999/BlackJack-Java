@@ -3,15 +3,18 @@ package com.oop.projects.Tools;
 import java.util.Scanner;
 
 public class Console {
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
 
-    public int requestInt(String text){
+    public static int requestInt(String text){
         System.out.println(text);
-        return scanner.nextInt();
+        String input = scanner.nextLine();
+        return Integer.parseInt(input);
+        // TODO: Add a try/catch for entering in a bad number.
     }
 
-    public String requestString(String text){
+
+    public static String requestString(String text){
         System.out.println(text);
         return scanner.nextLine();
     }

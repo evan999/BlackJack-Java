@@ -6,17 +6,61 @@ import com.oop.projects.CardGames.Card;
 public class BlackJack {
     Table table = new Table();
 
+    // TODO: Detect BlackJack
+    // TODO: Allow players to continue playing until players either decide to quit or run out of money
+
     public void play() {
+
+        table.createPlayers();
         table.getDeck().shuffle();
         deal();
-        setBet(table.getPlayer());
-        displayTable();
-        table.getPlayer().revealHand();
-        do {} while (!actorTurn(table.getPlayer()));
-        do {} while (!actorTurn(table.getDealer()));
-        endRound(table.getPlayer());
-        System.out.println(((Player)table.getPlayer().getActor()).getWallet());
+        getPlayerBets();
+        runPlayersTurns();
+//        for (BlackJackHand player : table.getPlayers()) {
+//            setBet(player);
+//        }
 
+
+//        setBet(table.getPlayer());
+        table.getDealer().revealHand();
+//        do {} while (!actorTurn(table.getPlayer()));
+        do {} while (!actorTurn(table.getDealer()));
+        displayTable();
+        for (BlackJackHand player : table.getPlayers()) {
+            endRound(player);
+        }
+        // TODO: Remove split hands
+//        while (table.getPlayers().size() > table.getPlayerCount()) {
+//            table.getPlayers().remove(table.getPlayers().size() - 1);
+//        }
+        table.cleanTable();
+        // TODO: Add ability to repeat game.
+        displayWallets();
+//        endRound(table.getPlayer());
+//        System.out.println(((Player)table.getPlayer().getActor()).getWallet());
+
+    }
+
+    private void displayWallets() {
+        for (BlackJackHand hand: table.getPlayers()) {
+            Player player = (Player) hand.getActor();
+            System.out.println(player.getName() + " " + player.getWallet());
+        }
+    }
+
+    private void getPlayerBets() {
+        for (BlackJackHand player : table.getPlayers()) {
+            setBet(player);
+        }
+    }
+
+    private void runPlayersTurns() {
+        for (int activeIndex = 0; activeIndex < table.getPlayers().size(); activeIndex++) {
+            displayTable();
+            BlackJackHand player = table.getPlayers().get(activeIndex);
+            player.revealHand();
+            do {} while (!actorTurn(player));
+        }
     }
 
     private void endRound(BlackJackHand player) {
@@ -71,25 +115,40 @@ public class BlackJack {
                 System.out.println(hand.getName() + " Stood.");
                 return true;
             case SPLIT:
-                Card splitCard = hand.removeCard(1);
-                BlackJackHand newHand = new BlackJackHand(hand.getActor());
-                newHand.addCard(splitCard);
+                split(hand);
+                return false;
             default:
-                System.out.println("ERROR! default case Stand");
+                System.out.println("ERROR! Default case Stand");
                 return true;
         }
     }
 
+    private void split(BlackJackHand hand) {
+        Card splitCard = hand.removeCard(1);
+        BlackJackHand newHand = new BlackJackHand(hand.getActor());
+        newHand.addCard(splitCard);
+        hand.addCard(table.getDeck().draw(true));
+        newHand.addCard(table.getDeck().draw(true));
+        newHand.setBet(hand.getBet());
+        table.getPlayers().add(newHand);
+    }
+
     private void deal() {
         for (int count = 0; count < 2; count++) {
-            table.getPlayer().addCard(table.getDeck().draw(count == 0 ? false : true));
+//            table.getPlayer().addCard(table.getDeck().draw(count == 0 ? false : true));
+            for (BlackJackHand player : table.getPlayers()) {
+                player.addCard(table.getDeck().draw(count == 0 ? false : true));
+            }
             table.getDealer().addCard(table.getDeck().draw(count == 0 ? false : true));
         }
     }
 
     private void displayTable() {
         System.out.println(table.getDealer().getName() + ": " + table.getDealer());
-        System.out.println(table.getPlayer().getName() + ": " + table.getPlayer());
+        for (BlackJackHand player : table.getPlayers()) {
+            System.out.println(player.getName() + ": " + player);
+        }
+//        System.out.println(table.getPlayer().getName() + ": " + table.getPlayer());
     }
 
     private void displayHand(BlackJackHand hand) {

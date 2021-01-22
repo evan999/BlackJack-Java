@@ -4,13 +4,12 @@ import com.oop.projects.Tools.Console;
 
 public class Player implements Actor {
     static int HIT = 1, STAND = 2, DOUBLE = 3, SPLIT = 4;
-    static Console console = new Console();
 
     private String name;
     private int wallet;
 
     public Player() {
-        name = console.requestString("What is your name?");
+        name = Console.requestString("What is your name?");
         wallet = 1000;
     }
 
@@ -23,8 +22,8 @@ public class Player implements Actor {
     public int setBet(){
         int bet;
         do {
-            System.out.println("Wallet: " + wallet);
-            bet = console.requestInt("What is your bet");
+            System.out.println(name + "'s Wallet: " + wallet);
+            bet = Console.requestInt("What is your bet?");
         } while (validateBet(bet));
         return bet;
     }
@@ -57,7 +56,7 @@ public class Player implements Actor {
     public int getAction(int score, String query, int minChoice, int maxChoice) {
         int choice;
         do {
-            choice = console.requestInt(query);
+            choice = Console.requestInt(query);
         } while (choice < minChoice || choice > maxChoice);
         return choice;
     }
