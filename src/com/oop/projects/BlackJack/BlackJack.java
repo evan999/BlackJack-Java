@@ -100,19 +100,21 @@ public class BlackJack {
     private boolean performAction(BlackJackHand hand, int action){
         switch(action) {
             case DOUBLE:
-                System.out.println("Double");
-                hand.doubleBet();
+//                System.out.println("Double");
+//                hand.doubleBet();
+                doubleAction(hand);
             case HIT:
-                Card card = table.getDeck().draw(true);
-                System.out.println(hand.getName() +" Hit and was dealt " + card);
-                hand.addCard(card);
+//                Card card = table.getDeck().draw(true);
+//                System.out.println(hand.getName() +" Hit and was dealt " + card);
+//                hand.addCard(card);
+                hit(hand);
                 if (didBust(hand.getScore())){
                     System.out.println("Busted " + hand.getScore());
                     return true;
                 }
                 return action == DOUBLE ? true : false;
             case STAND:
-                System.out.println(hand.getName() + " Stood.");
+                stand(hand);
                 return true;
             case SPLIT:
                 split(hand);
@@ -121,6 +123,22 @@ public class BlackJack {
                 System.out.println("ERROR! Default case Stand");
                 return true;
         }
+    }
+
+    private void stand(BlackJackHand hand) {
+        System.out.println(hand.getName() + " Stood.");
+//        return true;
+    }
+
+    private void hit(BlackJackHand hand) {
+        Card card = table.getDeck().draw(true);
+        hand.addCard(card);
+        System.out.println(hand.getName() +" Hit and was dealt " + card);
+    }
+
+    private void doubleAction (BlackJackHand hand) {
+        System.out.println("Double");
+        hand.doubleBet();
     }
 
     private void split(BlackJackHand hand) {
