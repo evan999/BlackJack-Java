@@ -11,6 +11,9 @@ public class BlackJack {
 
     public void play() {
 
+        while(!quit) {
+
+        }
         table.createPlayers();
         table.getDeck().shuffle();
         deal();
@@ -36,6 +39,7 @@ public class BlackJack {
         table.cleanTable();
         // TODO: Add ability to repeat game.
         displayWallets();
+
 //        endRound(table.getPlayer());
 //        System.out.println(((Player)table.getPlayer().getActor()).getWallet());
 
@@ -108,6 +112,7 @@ public class BlackJack {
 //                System.out.println(hand.getName() +" Hit and was dealt " + card);
 //                hand.addCard(card);
                 hit(hand);
+//                return hit(hand);
                 if (didBust(hand.getScore())){
                     System.out.println("Busted " + hand.getScore());
                     return true;
@@ -134,6 +139,11 @@ public class BlackJack {
         Card card = table.getDeck().draw(true);
         hand.addCard(card);
         System.out.println(hand.getName() +" Hit and was dealt " + card);
+//        if (didBust(hand.getScore())){
+//            System.out.println("Busted " + hand.getScore());
+//            return true;
+//        }
+//        return false;
     }
 
     private void doubleAction (BlackJackHand hand) {

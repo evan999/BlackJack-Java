@@ -29,9 +29,9 @@ public class BlackJackHand {
     }
 
 
-    public int size(){
-        return cards.size();
-    }
+//    public int size(){
+//        return cards.size();
+//    }
 
     public void addCard(Card card){
         cards.add(card);
