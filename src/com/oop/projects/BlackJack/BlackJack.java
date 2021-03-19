@@ -11,9 +11,9 @@ public class BlackJack {
 
     public void play() {
 
-        while(!quit) {
-
-        }
+//        while(!quit) {
+//
+//        }
         table.createPlayers();
         table.getDeck().shuffle();
         deal();
